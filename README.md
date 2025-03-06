@@ -10,6 +10,7 @@ The **Robust QR Code Detector** is a Python-based tool designed to detect QR cod
 - Logs scan statistics, including detection performance per method
 - Supports batch processing of images in a directory
 - Debug mode for detailed logging and image saving
+- Performance tracking with detailed scan summaries
 
 ## Dependencies
 Ensure you have the following dependencies installed before running the script:
@@ -22,8 +23,12 @@ pip install opencv-python numpy pyzbar imghdr
 ### Running the Script
 Run the script to process all images in the current directory:
 
-```sh
-python script_v1.py or python script_v2.py
+```
+python script_v1.py
+```
+or
+```
+python script_v2.py
 ```
 
 ### Debug Mode
