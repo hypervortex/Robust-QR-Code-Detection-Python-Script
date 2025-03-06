@@ -23,7 +23,7 @@ pip install opencv-python numpy pyzbar imghdr
 Run the script to process all images in the current directory:
 
 ```sh
-python script.py
+python script_v1.py or python script_v2.py
 ```
 
 ### Debug Mode
