@@ -20,7 +20,7 @@ class RobustQRCodeDetector:
         self.debug = debug
         self.max_workers = max_workers or (os.cpu_count() or 4)
         
-        # Tracking variables
+
         self.scan_results = {
             'scan_timestamp': datetime.now().isoformat(),
             'total_images_scanned': 0,
@@ -32,7 +32,7 @@ class RobustQRCodeDetector:
             'detected_qr_codes': []
         }
         
-        # Optimized preprocessing methods
+  
         self.preprocessing_methods = [
             ('original_grayscale', self._preprocess_original_grayscale),
             ('enhanced_contrast', self._preprocess_enhanced_contrast),
@@ -101,7 +101,7 @@ class RobustQRCodeDetector:
             if image is None:
                 return []
 
-            # Detect QR codes with multiple preprocessing methods
+     
             unique_qr_codes = {}
             method_detection_counts = {}
             
@@ -127,14 +127,13 @@ class RobustQRCodeDetector:
                 except Exception as e:
                     print(f"Error in {method_name} preprocessing: {e}")
 
-            # Update scan results
+   
             detected_codes = list(unique_qr_codes.values())
             if detected_codes:
                 self.scan_results['images_with_qr_codes'] += 1
                 self.scan_results['total_qr_codes_detected'] += len(detected_codes)
                 self.scan_results['detected_qr_codes'].extend(detected_codes)
             
-            # Update method performance
             for method, count in method_detection_counts.items():
                 self.scan_results['detection_methods_performance'][method] = \
                     self.scan_results['detection_methods_performance'].get(method, 0) + count
@@ -164,7 +163,7 @@ class RobustQRCodeDetector:
             if filename.lower().endswith(supported_extensions)
         ]
 
-        # Use ThreadPoolExecutor for concurrent processing
+    
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             # Submit detection tasks
             futures = [executor.submit(self.detect_qr_codes, path) for path in image_paths]
@@ -173,11 +172,9 @@ class RobustQRCodeDetector:
             for future in as_completed(futures):
                 future.result()
 
-        # Calculate final metrics
         total_processing_time = time.time() - start_total_time
         self.scan_results['processing_time'] = total_processing_time
-        
-        # Calculate detection rate
+       
         if self.scan_results['total_images_scanned'] > 0:
             self.scan_results['detection_rate'] = (
                 self.scan_results['images_with_qr_codes'] / 
@@ -187,17 +184,14 @@ class RobustQRCodeDetector:
         return self.scan_results
 
 def main():
-    # Create detector instance
+  
     detector = RobustQRCodeDetector(debug=True)
     
-    # Process images in current directory
     scan_results = detector.process_images_in_directory(os.getcwd())
     
-    # Save results to JSON
     with open('qr_code_scan_results.json', 'w') as f:
         json.dump(scan_results, f, indent=4)
     
-    # Print summary
     print("\n--- QR Code Scan Summary ---")
     print(f"Total Images Scanned: {scan_results['total_images_scanned']}")
     print(f"Images with QR Codes: {scan_results['images_with_qr_codes']}")
